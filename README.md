@@ -52,11 +52,14 @@ The platform ensures product authenticity, simplifies service workflows, and emp
 
 ## 📸 Screenshots
 
-> _[Add 2–3 screenshots here]_  
-> Suggested:
-> - Admin dashboard  
-> - Warranty generation form  
-> - Mobile verification result page
+### 🧑‍💼 Admin Dashboard
+![Admin Panel](assets/screenshots/admin-dashboard.png)
+
+### 📄 Warranty Generation Form
+![Warranty Form](assets/screenshots/warranty-form.png)
+
+### 📱 Warranty by the car number
+![Mobile Verification](assets/screenshots/car_number.png)
 
 ---
 
