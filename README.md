@@ -2,6 +2,7 @@
 
 🔗 [Visit Live Site](https://capsuleppf.com/)  
 🎨 UI design by [Lali Bagrationi](https://www.behance.net/ebb49210) · Built by [Daker.site](https://daker.site)
+
 **Capsule PPF** is a production-ready Laravel-based web application built to combat counterfeit automotive paint protection films. It provides a secure, verified, and trackable system for warranty generation, product validation, and service management.
 
 > 💡 **This project was fully developed from scratch by me — from the product architecture and security logic to the frontend implementation and backend logic.**
