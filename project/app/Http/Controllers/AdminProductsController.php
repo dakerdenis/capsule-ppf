@@ -71,43 +71,86 @@ class AdminProductsController extends Controller
         return view('admin.dashboard', compact('section'));
     }
 
-    public function adminPostProductAdd(Request $request)
-    {
-        $request->validate([
-            'product_codes' => 'required|string',
-        ]);
+public function adminPostProductAdd(Request $request)
+{
+    $request->validate([
+        'product_codes' => 'required|string',
+        'product_confirmation_codes' => 'required|string',
+    ]);
 
-        $codes = explode("\n", trim($request->product_codes)); // Split by new lines
-        $codes = array_map('trim', $codes); // Trim each code
+    // Разбираем строки
+    $codes = array_values(array_filter(array_map('trim', preg_split('/\r\n|\r|\n/', $request->product_codes)), fn($v) => $v !== ''));
+    $conf  = array_values(array_filter(array_map('trim', preg_split('/\r\n|\r|\n/', $request->product_confirmation_codes)), fn($v) => $v !== ''));
 
-        // Define mapping for product types
-        $productTypes = [
-            'UR' => 1, // Urban
-            'OP' => 2, // Optima
-            'EL' => 3, // Element
-            'HU' => 4, // Huracan
-            'MA' => 5, // Matte
-            'BL' => 6, // Black
-        ];
+    if (count($codes) === 0) {
+        return back()->withInput()->with('error', 'No product codes provided.');
+    }
+    if (count($codes) !== count($conf)) {
+        return back()->withInput()->with('error', 'Количество строк в обоих полях должно совпадать.');
+    }
 
-        // Define valid countries
-        $validCountries = ['AZ', 'US', 'EU'];
+    // Карты и доп. настройки
+    $productTypes = [
+        'UR' => 1, // Urban
+        'OP' => 2, // Optima
+        'EL' => 3, // Element
+        'HU' => 4, // Huracan
+        'MA' => 5, // Matte
+        'BL' => 6, // Black
+    ];
+    $validCountries = ['AZ', 'US', 'EU'];
 
-        $addedProducts = [];
+    $addedProducts = [];
+    $invalid = [];
 
-        foreach ($codes as $code) {
-            if (strlen($code) < 4) {
-                continue; // Skip invalid codes
-            }
+    // Быстрый локальный контроль дубликатов в одном запросе
+    $confUpper = array_map(fn($s) => strtoupper($s), $conf);
+    $confCounts = array_count_values($confUpper);
+    foreach ($confCounts as $k => $cnt) {
+        if ($cnt > 1) {
+            return back()->withInput()->with('error', "Duplicate confirmation code in input: {$k}");
+        }
+    }
 
-            $typePrefix = substr($code, 0, 2); // Extract first 2 letters
-            $countrySuffix = substr($code, -2); // Extract last 2 letters
+    // Проверка формата confirmation-кодов
+    foreach ($confUpper as $k) {
+        if (!preg_match('/^[A-Z0-9]{12}$/', $k)) {
+            return back()->withInput()->with('error', "Invalid confirmation code format: {$k}. Expect 12 chars A–Z0–9.");
+        }
+    }
 
-            if (!isset($productTypes[$typePrefix]) || !in_array($countrySuffix, $validCountries)) {
-                continue; // Skip invalid product codes
-            }
+    // Проверка уникальности в БД заранее (минимизируем ошибки при insert)
+    $existsInDb = \App\Models\Product::query()
+        ->whereIn('product_confirmation_code', $confUpper)
+        ->pluck('product_confirmation_code')
+        ->all();
+    if (!empty($existsInDb)) {
+        $dup = implode(', ', $existsInDb);
+        return back()->withInput()->with('error', "These confirmation codes already exist: {$dup}");
+    }
 
-            // Create new product
+    // Построчно создаём
+    foreach ($codes as $i => $code) {
+        if (strlen($code) < 4) {
+            $invalid[] = $code; continue;
+        }
+
+        $typePrefix = substr($code, 0, 2);
+        $countrySuffix = substr($code, -2);
+
+        if (!isset($productTypes[$typePrefix]) || !in_array($countrySuffix, $validCountries, true)) {
+            $invalid[] = $code; continue;
+        }
+
+        // Проверка уникальности product.code (на всякий)
+        if (Product::where('code', $code)->exists()) {
+            $invalid[] = $code; continue;
+        }
+
+        // Берём соответствующий confirmation-код
+        $pcc = $confUpper[$i];
+
+        try {
             $product = Product::create([
                 'code' => $code,
                 'type' => $productTypes[$typePrefix],
@@ -117,18 +160,28 @@ class AdminProductsController extends Controller
                 'service_id' => null,
                 'is_active' => false,
                 'activation_expires_at' => null,
-                'status' => Product::STATUS_ADDED, // <-- новое поле
+                'status' => Product::STATUS_ADDED,
+                'product_confirmation_code' => $pcc,
             ]);
-
             $addedProducts[] = $product->code;
-        }
-
-        if (count($addedProducts) > 0) {
-            return redirect()->route('admin.add_product')->with('success', count($addedProducts) . ' products added successfully.');
-        } else {
-            return redirect()->route('admin.add_product')->with('error', 'No valid products were added.');
+        } catch (\Throwable $e) {
+            // На случай гонок/уникальных ограничений и прочего
+            Log::error('Add product failed', ['code' => $code, 'err' => $e->getMessage()]);
+            $invalid[] = $code;
         }
     }
+
+    if (count($addedProducts) > 0) {
+        $msg = count($addedProducts) . ' products added successfully.';
+        if (count($invalid)) {
+            $msg .= ' Skipped: ' . implode(', ', $invalid);
+        }
+        return redirect()->route('admin.add_product')->with('success', $msg);
+    } else {
+        return redirect()->route('admin.add_product')->with('error', 'No valid products were added.');
+    }
+}
+
 
     public function adminDeleteProduct($id)
     {
