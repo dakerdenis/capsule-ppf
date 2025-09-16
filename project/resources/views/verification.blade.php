@@ -65,8 +65,9 @@
 
                                     </div>
 
-                                    <input placeholder="Enter product code" type="text" name="product_code"
-                                        id="product_code" required>
+                                    <input placeholder="Enter product code or confirmation code" type="text"
+                                        name="product_code" id="product_code" required>
+
                                 </div>
                                 <div class="tooltip" id="tooltip">
                                     <img src="{{ asset('public/images/DDS1.jpg') }}" alt="Help Image">

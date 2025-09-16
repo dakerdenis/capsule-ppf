@@ -76,9 +76,9 @@
         <form method="GET" action="{{ route('admin.products') }}" class="form-inline">
             <input type="text" name="search" value="{{ request('search') }}"
                 class="form-control mr-2 products__searchbar-input" placeholder="Поиск по коду продукта...">
-                <button type="submit" class="btn btn-primary search_button">
-                    <i class="fas fa-search"></i> Найти
-                </button>
+            <button type="submit" class="btn btn-primary search_button">
+                <i class="fas fa-search"></i> Найти
+            </button>
         </form>
     </div>
 
@@ -86,7 +86,9 @@
         <thead class="thead">
             <tr>
                 <th scope="col">ID</th>
-                <th scope="col">6 Digits Code</th>
+                <th scope="col">Product's Code</th>
+                <th scope="col">Confirmation Code</th>
+                <th scope="col">Confirm. check until</th>
                 <th scope="col">DD.MM.YYYY</th>
                 <th scope="col">Warranty Number</th>
 
@@ -116,6 +118,32 @@
                 <tr class="{{ $product->warranty ? 'has-warranty' : 'status-' . $product->status }}">
                     <th scope="row">{{ $product->id }}</th>
                     <td>{{ $product->code }}</td>
+                    <td>
+                        @if ($product->product_confirmation_code)
+                            <span class="badge badge-light" style="font-family: monospace;">
+                                {{ $product->product_confirmation_code }}
+                            </span>
+                        @else
+                            <span class="text-muted">—</span>
+                        @endif
+                    </td>
+
+                    <td>
+                        @if ($product->confirmation_check_expires_at)
+                            <span
+                                class="{{ now()->greaterThan($product->confirmation_check_expires_at) ? 'text-danger' : '' }}"
+                                title="{{ $product->confirmation_check_expires_at->toDayDateTimeString() }}">
+                                {{ $product->confirmation_check_expires_at->format('d.m.Y H:i') }}
+                                @if (now()->greaterThan($product->confirmation_check_expires_at))
+                                    <small>(expired)</small>
+                                @endif
+                            </span>
+                        @else
+                            <span class="text-muted">—</span>
+                        @endif
+                    </td>
+
+
                     <td>{{ $product->verification_date ? $product->verification_date->format('d.m.Y') : 'N/A' }}</td>
                     <td>
                         @if ($product->warranty)
@@ -132,14 +160,14 @@
                     <td>
                         @if ($product->activation_expires_at)
                             <span class="countdown-timer"
-                                  data-expiration="{{ \Carbon\Carbon::parse($product->activation_expires_at)->timestamp }}">
-                                  <i class="fas fa-clock"></i> <span class="time"></span>
+                                data-expiration="{{ \Carbon\Carbon::parse($product->activation_expires_at)->timestamp }}">
+                                <i class="fas fa-clock"></i> <span class="time"></span>
                             </span>
                         @else
                             N/A
                         @endif
                     </td>
-                    
+
 
                     <td>{{ $product->verification_counter ?? 'N/A' }}</td>
                     <td>{{ $typeNames[$product->type] ?? 'Unknown' }}</td>
@@ -147,7 +175,8 @@
                     <!----SERVICE--->
                     <td>
                         @if ($product->service_id)
-                            <a href="{{ route('admin.service', ['id' => $product->service_id]) }}" class="btn btn-light" target="_blank">
+                            <a href="{{ route('admin.service', ['id' => $product->service_id]) }}"
+                                class="btn btn-light" target="_blank">
                                 Service #{{ $product->service_id }}
                             </a>
                         @else
@@ -204,11 +233,11 @@
                                 Active
                             </button>
                         @else
-                        <a style="color: #fff"
-                        href="{{ route('admin.sell_products', ['code' => $product->code]) }}"
-                        class="btn btn-primary btn-sm">
-                         <i class="fas fa-store"></i> Продать
-                     </a>
+                            <a style="color: #fff"
+                                href="{{ route('admin.sell_products', ['code' => $product->code]) }}"
+                                class="btn btn-primary btn-sm">
+                                <i class="fas fa-store"></i> Продать
+                            </a>
                         @endif
                     </td>
 
@@ -221,9 +250,9 @@
                         @else
                             <!-- Trigger Delete Modal -->
                             <button class="btn btn-danger btn-sm open-delete-modal" data-toggle="modal"
-                            data-target="#deleteModal{{ $product->id }}">
-                            <i class="fas fa-trash-alt"></i> Delete
-                        </button>
+                                data-target="#deleteModal{{ $product->id }}">
+                                <i class="fas fa-trash-alt"></i> Delete
+                            </button>
 
                             <!-- Modal -->
                             <div class="modal fade" id="deleteModal{{ $product->id }}" tabindex="-1"
@@ -307,4 +336,3 @@
     updateCountdownTimers();
     setInterval(updateCountdownTimers, 1000);
 </script>
-

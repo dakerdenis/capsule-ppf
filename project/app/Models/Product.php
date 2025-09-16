@@ -26,11 +26,13 @@ class Product extends Model
         'activation_expires_at',
         'activation_expires_at' => 'datetime',
         'product_confirmation_code',
+        'confirmation_check_expires_at'
     ];
 
     protected $casts = [
         'verification_date' => 'date',
         'activation_expires_at' => 'datetime',
+        'confirmation_check_expires_at' => 'datetime',
     ];
     // ✅ Динамическая проверка активности
     public function getIsActiveAttribute($value)
