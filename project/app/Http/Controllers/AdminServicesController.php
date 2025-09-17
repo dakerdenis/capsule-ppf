@@ -30,8 +30,6 @@ class AdminServicesController extends Controller
         $section = 'services__add';
         return view('admin.dashboard', compact('section'));
     }
-
-    
     public function adminPostAddService(Request $request)
     {
         // Validate the request
@@ -70,8 +68,6 @@ class AdminServicesController extends Controller
 
         return redirect()->route('admin.services')->with('success', 'Service added successfully.');
     }
-
-
     public function adminDeleteService($id)
     {
         $service = Service::findOrFail($id);
