@@ -45,9 +45,7 @@ jobs:
         run: php artisan migrate --force
 
       - name: Laravel Pint (code style)
-        run: |
-          composer require laravel/pint --dev --no-interaction
-          ./vendor/bin/pint --test
+        run: ./vendor/bin/pint --test
 
       - name: Run tests
         env:
