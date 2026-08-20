@@ -89,4 +89,15 @@ php artisan serve
 ### Admin Dashboard
 ![Admin Panel](assets/screenshots/admin-dashboard.png)
 
-### Warranty Generation
+### Warranty Generation Form
+![Warranty Form](assets/screenshots/warranty-form.png)
+
+### Warranty Check by License Plate
+![Warranty by Plate](assets/screenshots/car_number.png)
+
+### Product Box with QR and Product Code
+![Product Box](assets/screenshots/box.png)
+
+---
+
+<sub>Built by [Denis Akershteyn](https://www.linkedin.com/in/denis-akershteyn) · [DAKER Studio](https://daker.site)</sub>
