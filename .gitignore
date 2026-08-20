@@ -1,0 +1,30 @@
+# Laravel — project is in the /project subfolder
+project/vendor/
+project/node_modules/
+project/public/build
+project/public/hot
+project/public/storage
+project/storage/*.key
+project/storage/framework/cache/*
+project/storage/framework/sessions/*
+project/storage/framework/views/*
+project/storage/logs/*
+project/.env
+project/.env.backup
+project/.env.production
+project/.phpunit.result.cache
+project/.phpunit.cache
+project/auth.json
+
+# Editors / OS
+.idea/
+.vscode/
+.nova/
+.zed/
+.fleet/
+.DS_Store
+Thumbs.db
+
+# Logs
+npm-debug.log
+yarn-error.log

@@ -1,0 +1,463 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Handlee&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredericka+the+Great&display=swap');
+
+/**! ***COLORS*************/
+/**! ***COLORS*************/
+/**! ***COLORS*************/
+:root {
+  --orange: #FFAC1C;
+  /* ORANGE color */
+  --black: #000;
+  /* BLACK color */
+  --white: #fff;
+  /* WHITE color */
+  --cream: #ECE7E2;
+  --grey: #ECE7E2;
+  --grey2: #323232;
+  --grey3: #1E1E1E;
+  --radius: 20px;
+}
+
+
+
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+*,
+*:before,
+*:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+:focus,
+:active {
+  outline: none;
+}
+
+a:focus,
+a:active {
+  outline: none;
+}
+
+nav,
+footer,
+header,
+aside {
+  display: block;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  font-size: 100%;
+  line-height: 1;
+  font-size: 14px;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  font-family: "Montserrat", sans-serif;
+}
+
+body::-webkit-scrollbar {
+  width: 0;
+}
+
+body.lock {
+  overflow: hidden;
+}
+
+input,
+button,
+textarea {
+  font-family: inherit;
+}
+
+input::-ms-clear {
+  display: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+button::-ms-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+a,
+a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+ul li {
+  list-style: none;
+}
+
+img {
+  vertical-align: top;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: 400;
+}
+
+.admin__wrapper {
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    justify-content: space-between;
+}
+.admin__wrapper__controlpanel {
+    width: 235px;
+    height: 100%;
+    background-color: #F1F1F1;
+    padding: 42px 17px;
+    position: relative;
+}
+.admin__logo {
+    width: 80%;
+    margin: 0 auto;
+
+}
+.admin__logo img{
+    width: 100%;
+    object-fit: cover;
+}
+.admin__hello {
+    color: #000;
+    text-align: center;
+    margin-top: 20px;
+    line-height: 30px;
+    font-size: 24px;
+}
+.admin__hello p {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 8px 10px;
+  border-radius: 6px;
+  display: inline-block;
+}
+.admin__navigation {
+    margin-top: 50px;
+}
+.admin__navigation-element {
+    height: 30px;
+    margin-top: 20px;
+}
+.admin__navigation-element a {
+  min-width: 150px;
+  color: #000;
+  font-weight: 500;
+  text-align: left;
+}
+.admin__logout {
+    position: absolute;
+    bottom: 150px;
+    width: 100%;
+    text-align: center;
+    left: 0px;
+}
+.admin__logout button{
+    width: 150px;
+ 
+}
+.admin__wrapper__content {
+    width: calc(100% - 235px);
+    height: 100%;
+}
+.admin__content_container {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+
+}
+.products__sortby__buttons{
+  margin-bottom: 10px;
+}
+.products__sortby__buttons a {
+  margin-right: 10px;
+}
+.products__sortby{
+  margin-bottom: 5px;
+}
+
+.add__input{
+  width: 300px;
+  margin-bottom: 20px;
+}
+.add__input-name{
+  font-size: 16px;
+  margin-bottom: 3px;
+
+}
+.add__input-input{
+  width: 100%;
+  height: 40px;
+  background-color: #fff;  
+  overflow: hidden;
+  border-radius: 5px;
+  border: 1px solid #00000024;
+}
+.add__input-input input {
+  width: 100%;
+  height: 100%;
+  padding: 2px 10px;
+  border-bottom: 3px solid #055a00;
+}
+.delete_image-button {
+  width: 30px;
+  height: 30px;
+  background-color: #32323200;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+}
+.delete_image{
+  width: 30px;
+  height: 30px;
+
+}
+.active_a{
+  background-color: #CED6F8;
+}
+.btn_logout{
+  width: 150px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+}
+.btn_logout img {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
+.btn_logout p {
+  margin-bottom: 0px;
+}
+.admin__navigation-element .active {
+  background-color: #28a745 !important; /* Green Background */
+  color: white !important; /* White Text */
+  border-radius: 5px;
+}
+.services__wrapper td a{
+  color: #4340DA;
+  font-weight: 500;
+}
+.service__table-img img{
+
+}
+.admin__wrapper__controlpanel {
+  background: linear-gradient(to bottom, #343a40, #212529);
+  color: #fff;
+  padding: 20px;
+  width: 260px;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+  min-height: 100vh;
+  position: fixed;
+}
+
+.admin__logo img {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.admin__server-time {
+  color: #fff;
+  font-size: 14px;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.admin__hello {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.admin__navigation-element {
+  margin-top: 10px;
+}
+
+.admin__navigation-element a {
+  display: block;
+  color: #fff;
+  background: #495057;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 15px;
+  text-align: left;
+  transition: background 0.3s ease;
+}
+
+/* --- FIX: Hover keeps text white --- */
+.admin__navigation-element a:hover,
+.admin__navigation-element a:focus,
+.admin__navigation-element a.active_a {
+  color: #fff !important;
+  background-color: #17a2b8;
+  text-decoration: none;
+}
+
+.admin__navigation-element a i {
+  margin-right: 8px;
+}
+
+.admin__logout {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.btn_logout {
+  background-color: #dc3545;
+  color: white;
+  padding: 10px;
+  border: none;
+  width: 100%;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.btn_logout:hover {
+  background-color: #c82333;
+}
+
+/* --- LOGOUT BUTTON REPLACEMENT (FA ICON) --- */
+.btn_logout i {
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.btn_logout p {
+  margin-bottom: 0;
+  font-size: 14px;
+}
+
+.admin__wrapper__content {
+  margin-left: 280px;
+  padding: 20px;
+  background: #f8f9fa;
+  min-height: 100vh;
+}
+
+.admin__content_container {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+
+}
+.sell_products__container{
+  width: 100%;
+  max-width: 600px;
+}
+.sell__products__wrapper{
+  padding: 10px;
+}
+
+
+/**********************************/
+/**********************************/
+/**********************************/
+/* Burger button */
+.burger-btn {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  background: #343a40;
+  border: none;
+  color: white;
+  padding: 14px 20px;
+  border-radius: 4px;
+  font-size: 18px;
+  z-index: 999;
+  cursor: pointer;
+  display: none;
+}
+
+/* Show burger on small screens */
+@media (max-width: 991.98px) {
+  .burger-btn {
+    display: block;
+  }
+
+  .admin__wrapper__controlpanel {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 998;
+  }
+
+  .admin__wrapper__controlpanel.open {
+    transform: translateX(0);
+  }
+
+  .admin__wrapper__content {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .admin__content_container {
+    padding-top: 60px;
+  }
+  .admin__wrapper__controlpanel{
+    width: 80%;
+  }
+  .admin__navigation-element{
+    height: initial;
+    margin-top: 5px;
+  }
+  .admin__logout button{
+    width: 210px;
+  }
+  .btn_logout{
+    padding: 15px;
+
+    text-align: center;
+  }
+  #server-time-display{
+    font-size: 18px;
+  }
+  .admin__navigation{
+    margin-top: 0px;
+  }
+  .admin__logout{
+    bottom: 0;
+  }
+  .admin__logo img{
+    margin-bottom: 5px;
+  }
+  .admin__server-time{
+    height: 35px;
+  }
+  .admin__hello {
+    margin-top: 7px;
+  }
+}
